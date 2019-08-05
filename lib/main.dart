@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 void main() => runApp(MyApp());
 
 final TextStyle cardStyle = TextStyle(
-  fontSize: 10.0,
-  fontWeight: FontWeight.w100,
+  fontSize: 12.0,
+  fontWeight: FontWeight.w400,
 );
 
 class MyApp extends StatelessWidget {
@@ -28,77 +28,71 @@ class _BingoPageState extends State<BingoPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-      title: Text('Conference Call Bingo'),
+        title: Text('Conference Call Bingo'),
       ),
       body: Container(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            Row(
-              children: <Widget>[
-                Expanded(
-                  child: BingoCard(
-                    cliches[0],
-                    onPress: null,
-                  ),
-                ),
-                Expanded(
-                  child: BingoCard(
-                    cliches[1],
-                    onPress: null,
-                  ),
-                ),
-                Expanded(
-                  child: BingoCard(
-                    cliches[2],
-                    onPress: null,
-                  ),
-                ),
-                Expanded(
-                  child: BingoCard(
-                    cliches[3],
-                    onPress: null,
-                  ),
-                ),
-                Expanded(
-                  child: BingoCard(
-                    cliches[4],
-                    onPress: null,
-                  ),
-                ),
-              ],
-            ),
-
+            bingoRow(5, 0),
+            bingoRow(5, 1),
+            bingoRow(5, 2),
+            bingoRow(5, 3),
+            bingoRow(5, 4),
           ],
         ),
       ),
     );
+  }
+
+  Row bingoRow(int noOfItems, int rowNo) {
+    List<BingoCard> list = new List();
+
+    int startIndex = noOfItems * rowNo;
+
+    for (var i = 0; i < noOfItems; i++) {
+      list.add(
+        new BingoCard(
+          cliches[startIndex + i],
+          onPress: null,
+        ),
+      );
+    }
+
+    return Row(
+      children: list,
+    );
+
   }
 }
 
 class BingoCard extends StatelessWidget {
   BingoCard(this.text, {this.onPress});
 
-
   final Function onPress;
   final String text;
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onPress,
-      child: AspectRatio(
-        aspectRatio: 1,
-        child: Container(
-          child: Text(
-            text,
-            style: cardStyle,
-          ),
-          margin: EdgeInsets.all(2.0),
-          decoration: BoxDecoration(
-            color: Colors.grey[900],
-            borderRadius: BorderRadius.circular(5.0),
+    return Expanded(
+      child: GestureDetector(
+        onTap: onPress,
+        child: AspectRatio(
+          aspectRatio: 1,
+          child: Container(
+            child: Center(
+              child: Text(
+                text,
+                style: cardStyle,
+              ),
+            ),
+            margin: EdgeInsets.all(1.0),
+            padding: EdgeInsets.all(2.0),
+            decoration: BoxDecoration(
+              color: Colors.grey[900],
+              borderRadius: BorderRadius.circular(5.0),
+            ),
           ),
         ),
       ),

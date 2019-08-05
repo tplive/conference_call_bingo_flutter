@@ -35,27 +35,37 @@ class _BingoPageState extends State<BingoPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            bingoRow(5, 0),
-            bingoRow(5, 1),
-            bingoRow(5, 2),
-            bingoRow(5, 3),
-            bingoRow(5, 4),
+            buildBingoRow(items: 5, rowNumber: 0),
+            buildBingoRow(items: 5, rowNumber: 1),
+            buildBingoRow(items: 5, rowNumber: 2),
+            buildBingoRow(items: 5, rowNumber: 3),
+            buildBingoRow(items: 5, rowNumber: 4),
           ],
         ),
       ),
     );
   }
 
-  Row bingoRow(int noOfItems, int rowNo) {
+  Row buildBingoRow({int items, int rowNumber}) {
     List<BingoCard> list = new List();
 
-    int startIndex = noOfItems * rowNo;
+    int startIndex = items * rowNumber;
 
-    for (var i = 0; i < noOfItems; i++) {
+    for (var i = 0; i < items; i++) {
       list.add(
         new BingoCard(
-          cliches[startIndex + i],
-          onPress: null,
+          cliches[startIndex + i].text,
+          active: cliches[startIndex + i].active,
+          onPress: () {
+            setState(() {
+              if(cliches[startIndex + i].active == true) {
+                cliches[startIndex + i].active = false;
+              }else {
+                cliches[startIndex + i].active = true;
+              }
+
+            });
+          },
         ),
       );
     }
@@ -68,10 +78,11 @@ class _BingoPageState extends State<BingoPage> {
 }
 
 class BingoCard extends StatelessWidget {
-  BingoCard(this.text, {this.onPress});
+  BingoCard(this.text, {this.active, this.onPress});
 
   final Function onPress;
   final String text;
+  bool active;
 
   @override
   Widget build(BuildContext context) {
@@ -90,7 +101,7 @@ class BingoCard extends StatelessWidget {
             margin: EdgeInsets.all(1.0),
             padding: EdgeInsets.all(2.0),
             decoration: BoxDecoration(
-              color: Colors.grey[900],
+              color: this.active == true ? Colors.green[500] : Colors.grey[900],
               borderRadius: BorderRadius.circular(5.0),
             ),
           ),
@@ -100,30 +111,37 @@ class BingoCard extends StatelessWidget {
   }
 }
 
-final List<String> cliches = [
-  'Hi, who just joined?',
-  'Can you email that to everyone?',
-  '___, are you there?',
-  'Uh, ___, you\'re still sharing..',
-  'Hey guys, I have to jump to another call',
-  '(sound of someone typing, possibly with a hammer)',
-  '(loud, painful echo/feedback',
-  '(child or animal noises)',
-  'Hi, can you hear me?',
-  '..no, it\'s still loading',
-  'Next slide, please..',
-  'Can everyone go on mute?',
-  'I\'m sorry, I was on mute..',
-  '(for overtalkers)\nSorry, go ahead.',
-  'Hello?\nHello!?',
-  'So, (fades out), I can (unintelligible) by (cuts out) ok?',
-  'Sorry I\'m late, <insert lame excuse>',
-  'I have a hard stop at..',
-  'I\'m sorry, you cut out there..',
-  'Can we take this offline?',
-  'I\'ll have to get back to you',
-  'Can everyone see my screen?',
-  'Sorry, I was having connection issues..',
-  'I think there is a lag..',
-  'Sorry I didn\'t catch that, can you repeat?'
+class Cliche {
+
+  Cliche({this.text});
+
+  String text;
+  bool active = false;
+}
+final List<Cliche> cliches = [
+  new Cliche(text: 'Hi, who just joined?'),
+  new Cliche(text: 'Can you email that to everyone?'),
+  new Cliche(text: '___, are you there?'),
+  new Cliche(text: 'Uh, ___, you\'re still sharing..'),
+  new Cliche(text: 'Hey guys, I have to jump to another call'),
+  new Cliche(text: '(sound of someone typing, possibly with a hammer)'),
+  new Cliche(text: '(loud, painful echo/feedback'),
+  new Cliche(text: '(child or animal noises)'),
+  new Cliche(text: 'Hi, can you hear me?'),
+  new Cliche(text: '..no, it\'s still loading'),
+  new Cliche(text: 'Next slide, please..'),
+  new Cliche(text: 'Can everyone go on mute?'),
+  new Cliche(text: 'I\'m sorry, I was on mute..'),
+  new Cliche(text: '(for overtalkers)\nSorry, go ahead.'),
+  new Cliche(text: 'Hello?\nHello!?'),
+  new Cliche(text: 'So, (fades out), I can (unintelligible) by (cuts out) ok?'),
+  new Cliche(text: 'Sorry I\'m late, <insert lame excuse>'),
+  new Cliche(text: 'I have a hard stop at..'),
+  new Cliche(text: 'I\'m sorry, you cut out there..'),
+  new Cliche(text: 'Can we take this offline?'),
+  new Cliche(text: 'I\'ll have to get back to you'),
+  new Cliche(text: 'Can everyone see my screen?'),
+  new Cliche(text: 'Sorry, I was having connection issues..'),
+  new Cliche(text: 'I think there is a lag..'),
+  new Cliche(text: 'Sorry I didn\'t catch that, can you repeat?'),
 ];

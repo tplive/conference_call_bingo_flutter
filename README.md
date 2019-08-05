@@ -4,6 +4,7 @@ This is an app-adaptation of a "popular" bingo-game played in conference calls a
 
 The idea is that the clichès mentioned on the board happen frequently in conference-calls everywhere. As the clicès start cropping up during the meeting, you tick them off, one by one, until you get a Bingo!
 
+![original conference call bingo game](lib/images/conference_call_bingo.jpg)
 ## TODO
 
 * Single-user version with workable bingo board and bingo detection.

@@ -58,12 +58,13 @@ class _BingoPageState extends State<BingoPage> {
           active: cliches[startIndex + i].active,
           onPress: () {
             setState(() {
-              if(cliches[startIndex + i].active == true) {
+              if (cliches[startIndex + i].active == true) {
                 cliches[startIndex + i].active = false;
-              }else {
+              } else {
                 cliches[startIndex + i].active = true;
-              }
+                detectBingo();
 
+              }
             });
           },
         ),
@@ -73,7 +74,20 @@ class _BingoPageState extends State<BingoPage> {
     return Row(
       children: list,
     );
+  }
 
+  bool detectBingo() {
+    int countActive = 0;
+
+    // Full bingo. Returns true only if all cards are active.
+    for (var i = 0; i < cliches.length; i++) {
+      if (cliches[i].active == true) {
+        countActive++;
+      }
+    }
+    bool bingo = countActive == cliches.length;
+    print('Bingo?$bingo');
+    return countActive == cliches.length;
   }
 }
 
@@ -112,12 +126,12 @@ class BingoCard extends StatelessWidget {
 }
 
 class Cliche {
-
-  Cliche({this.text});
+  Cliche({this.text, this.active});
 
   String text;
   bool active = false;
 }
+
 final List<Cliche> cliches = [
   new Cliche(text: 'Hi, who just joined?'),
   new Cliche(text: 'Can you email that to everyone?'),

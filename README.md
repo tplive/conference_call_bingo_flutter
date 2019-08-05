@@ -1,16 +1,14 @@
-# conference_call_bingo
+# Conference Call Bingo
 
-A new Flutter application.
+This is an app-adaptation of a "popular" bingo-game played in conference calls all over the world.
 
-## Getting Started
+The idea is that the clichès mentioned on the board happen frequently in conference-calls everywhere. As the clicès start cropping up during the meeting, you tick them off, one by one, until you get a Bingo!
 
-This project is a starting point for a Flutter application.
+## TODO
 
-A few resources to get you started if this is your first Flutter project:
+* Single-user version with workable bingo board and bingo detection.
+* Randomization of the board for more fun!
+* Multi-user version where every conference-participant gets a random board and the first one to get a bingo wins!
+* Editable clichès-list, making the game adaptable for any scenario
+* Sharing of edited lists for community
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.

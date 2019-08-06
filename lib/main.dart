@@ -24,6 +24,35 @@ class BingoPage extends StatefulWidget {
 }
 
 class _BingoPageState extends State<BingoPage> {
+
+  void _dismissDialog() {}
+
+  void _showMaterialDialog() {
+
+    showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('Bingo!'),
+          content: Text('You have a full Bingo!'),
+          actions: <Widget>[
+            FlatButton(
+              onPressed: () {
+                setState(() {
+                  _resetBoard();
+                });
+                Navigator.of(context).pop();
+
+              },
+              child: Text('Reset'),
+            ),
+          ],
+        );
+      },
+    );
+
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,7 +91,9 @@ class _BingoPageState extends State<BingoPage> {
                 cliches[startIndex + i].active = false;
               } else {
                 cliches[startIndex + i].active = true;
-                detectBingo();
+                if(_detectBingo()) {
+                  _showMaterialDialog();
+                }
 
               }
             });
@@ -76,7 +107,7 @@ class _BingoPageState extends State<BingoPage> {
     );
   }
 
-  bool detectBingo() {
+  bool _detectBingo() {
     int countActive = 0;
 
     // Full bingo. Returns true only if all cards are active.
@@ -86,9 +117,16 @@ class _BingoPageState extends State<BingoPage> {
       }
     }
     bool bingo = countActive == cliches.length;
-    print('Bingo?$bingo');
     return countActive == cliches.length;
   }
+
+  void _resetBoard() {
+    for (var i = 0; i < cliches.length; i++) {
+      cliches[i].active = false;
+    }
+  }
+
+
 }
 
 class BingoCard extends StatelessWidget {
@@ -131,6 +169,8 @@ class Cliche {
   String text;
   bool active = false;
 }
+
+
 
 final List<Cliche> cliches = [
   new Cliche(text: 'Hi, who just joined?'),
